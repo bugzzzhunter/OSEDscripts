@@ -4,7 +4,7 @@ import time,os
 import pattern
 import pykd
 
-fd=open("fuzz_out.txt","a")
+#fd=open("fuzz_out.txt","a")
 
 def main():
     
@@ -28,7 +28,7 @@ def main():
         try:
             index=pattern.pattern_search(eip)
             print("Pattern "+eip+" found at: "+str(index))
-            fd.write("Pattern found at: "+str(index))
+            #fd.write("Pattern found at: "+str(index))
             f=open('status.txt','w')
             f.write(str(index))
             f.close()
@@ -39,7 +39,7 @@ def main():
             try:
                 index=pattern.pattern_search(str("0x"+exchainIP))
                 print("Pattern "+str("0x"+exchainIP)+" found at: "+str(index))
-                fd.write("Pattern found at: "+str(index))
+                #fd.write("Pattern found at: "+str(index))
                 f=open('status.txt','w')
                 f.write(str(index))
                 f.close()

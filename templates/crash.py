@@ -4,7 +4,7 @@ import time, os
 import pykd
 
 
-fd=open("fuzz_out.txt","a")
+#fd=open("fuzz_out.txt","a")
 
 def main():
     
@@ -46,7 +46,7 @@ def main():
         elif '41414141' in pykd.dbgCommand('r'):
             print('*'*10+'Application crashed but no EIP control!'+'*'*10)
             print(pykd.dbgCommand('r'))
-            fd.write(pykd.dbgCommand('r'))
+            #fd.write(pykd.dbgCommand('r'))
             #Restart app with pattern
             print(str(hex(pykd.getIP())))
             f=open('status.txt','w')

@@ -1,4 +1,4 @@
-import subprocess, psutil 
+import subprocess
 import sys, os
 import time
 
@@ -14,9 +14,15 @@ class runApplication:
         ret = p.communicate()
         return ret[0].decode('ascii').strip()
 
+    def getProcessDetails(self, appName):
+        #print(appName)
+        p = subprocess.Popen(["powershell.exe", "(Get-Process -ProcessName "+appName+").Id"], stdout=subprocess.PIPE, shell=True)
+        ret = p.communicate()
+        return ret[0].decode('ascii').strip()
+
 
     def launchWindbg(self, pid,winDBGcmd):
-        cmd = '"C:\\Program Files\\Windows Kits\\10\\Debuggers\\x86\windbg.exe" -W "Default" -c ".load pykd;'+winDBGcmd+'" -p '+str(pid)
+        cmd = '"C:\\Program Files\\Windows Kits\\10\\Debuggers\\x86\windbg.exe" -WF "c:\windbg_custom.WEW" -c ".load pykd;'+winDBGcmd+'" -p '+str(pid)
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=False)
         return p
         #os.system('"'+cmd+'"')
@@ -31,9 +37,9 @@ class runApplication:
                 #time.sleep(3)
                 procName = appName.split('\\')[-1]
                 #print(procName)
-                if procName.lower() in (p.name().lower() for p in psutil.process_iter()):
-                    pid=[p.pid for p in psutil.process_iter() if p.name().lower()==procName.lower()][0]
-                    if pid:
+                pid=self.getProcessDetails(procName[:-4])
+                #print("PID is:"+str(pid))
+                if 'Cannot find' not in pid:
                         print("existing PID: "+str(pid))
                         return pid
                 else:
