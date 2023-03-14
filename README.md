@@ -20,3 +20,7 @@
  Use below commands to check if app crashes with POC and to find EIP index.
  
 ![CrashAndFindIndex](CrashAppAndFindIndex.gif)
+
+
+
+Additional credits: Used code from https://github.com/Svenito/exploit-pattern for pattern.py
