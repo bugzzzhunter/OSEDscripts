@@ -22,7 +22,10 @@ class runApplication:
 
 
     def launchWindbg(self, pid,winDBGcmd):
-        cmd = '"C:\\Program Files\\Windows Kits\\10\\Debuggers\\x86\windbg.exe" -WF "c:\windbg_custom.WEW" -c ".load pykd;'+winDBGcmd+'" -p '+str(pid)
+        if ';Workspace=Default' in winDBGcmd:
+            cmd = '"C:\\Program Files\\Windows Kits\\10\\Debuggers\\x86\windbg.exe" -c ".load pykd;'+winDBGcmd.replace(';Workspace=Default','')+'" -p '+str(pid)   # Low performance
+        else:
+            cmd = '"C:\\Program Files\\Windows Kits\\10\\Debuggers\\x86\windbg.exe" -c ".load pykd;'+winDBGcmd+'" -p '+str(pid) 
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=False)
         return p
         #os.system('"'+cmd+'"')

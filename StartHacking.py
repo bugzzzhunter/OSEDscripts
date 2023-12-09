@@ -29,7 +29,7 @@ def main():
 
     exp = False
 
-    exploitModes = ['runApp', 'crash', 'findIndex', 'findBadChar']
+    exploitModes = ['runApp', 'crash', 'findIndex', 'findBadChar', 'quickRun']
 
     parser = argparse.ArgumentParser()
     #group = parser.add_mutually_exclusive_group()
@@ -74,9 +74,15 @@ def main():
     if args.mode == 'runApp':
         ah = ApplicationHandler.runApplication()
         pid=ah.startService(appName)
+        winDBGcmd+=';Workspace=Default'
         windbgProc=ah.launchWindbg(pid,winDBGcmd)
         print('[*]Application '+appName+' is up and runnning with pid '+str(pid))
-    elif args.mode == 'crash' or args.mode == 'findIndex':# or args.mode == 'findBadChar':
+    elif args.mode == 'quickRun':
+        ah = ApplicationHandler.runApplication()
+        pid=ah.startService(appName)
+        windbgProc=ah.launchWindbg(pid,winDBGcmd)
+        print('[*]Application '+appName+' is up and runnning with pid '+str(pid))
+    elif args.mode == 'crash' or args.mode == 'findIndex' or args.mode == 'findBadChar':
         winDBGcmd=""
         exp = True
         runExploitMode(args.mode, args.exploit, args.exploitDelay)
